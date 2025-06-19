@@ -80,30 +80,58 @@ const GalleryUpload = ({ onItemsAdd }: GalleryUploadProps) => {
 
         <div
           {...getRootProps()}
-          className={`border-2 border-dashed rounded-xl p-12 text-center transition-colors cursor-pointer ${
+          className={`border-2 border-dashed rounded-xl p-12 text-center transition-all duration-300 cursor-pointer ${
             isDragActive
-              ? "border-primary bg-primary/5"
-              : "border-gray-300 hover:border-primary/50"
+              ? "border-blue-500 bg-blue-50 scale-105"
+              : "border-gray-300 hover:border-blue-400 hover:bg-gray-50"
           }`}
         >
           <input {...getInputProps()} />
-          <Icon
-            name="Upload"
-            className="h-12 w-12 text-gray-400 mx-auto mb-4"
-          />
 
-          {isDragActive ? (
-            <p className="text-primary font-medium">Отпустите файлы здесь...</p>
-          ) : (
-            <div>
-              <p className="text-gray-600 mb-2">
-                Перетащите файлы сюда или нажмите для выбора
-              </p>
-              <p className="text-sm text-gray-400">
-                Поддерживаются: изображения, видео, документы, аудио
-              </p>
-            </div>
-          )}
+          <div className="flex flex-col items-center">
+            {isDragActive ? (
+              <>
+                <Icon
+                  name="Download"
+                  className="h-16 w-16 text-blue-500 mb-4 animate-bounce"
+                />
+                <p className="text-blue-600 font-semibold text-lg">
+                  Отпустите файлы здесь! 🎯
+                </p>
+              </>
+            ) : (
+              <>
+                <div className="flex space-x-2 mb-4">
+                  <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                    <Icon name="Image" className="h-6 w-6 text-green-600" />
+                  </div>
+                  <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                    <Icon name="Video" className="h-6 w-6 text-purple-600" />
+                  </div>
+                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                    <Icon name="FileText" className="h-6 w-6 text-blue-600" />
+                  </div>
+                </div>
+
+                <p className="text-gray-700 font-medium text-lg mb-2">
+                  📤 Перетащите файлы сюда или нажмите для выбора
+                </p>
+                <p className="text-sm text-gray-500 mb-4">
+                  Поддерживаются: фотографии, видео, документы, аудио
+                </p>
+
+                <div className="flex flex-wrap gap-2 text-xs text-gray-400">
+                  <span className="bg-gray-100 px-2 py-1 rounded">JPG</span>
+                  <span className="bg-gray-100 px-2 py-1 rounded">PNG</span>
+                  <span className="bg-gray-100 px-2 py-1 rounded">MP4</span>
+                  <span className="bg-gray-100 px-2 py-1 rounded">PDF</span>
+                  <span className="bg-gray-100 px-2 py-1 rounded">
+                    и другие
+                  </span>
+                </div>
+              </>
+            )}
+          </div>
         </div>
       </div>
 

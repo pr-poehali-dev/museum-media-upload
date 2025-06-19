@@ -28,30 +28,41 @@ const MuseumGallery = () => {
     <div className="min-h-screen bg-gray-50">
       <Navigation />
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <h1 className="font-montserrat font-bold text-3xl text-gray-900 mb-4">
-            🏛️ Галерея музея
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="text-center mb-12">
+          <h1 className="font-montserrat font-bold text-4xl text-gray-900 mb-4">
+            🏛️ Истфак в музее
           </h1>
-          <p className="text-gray-600 text-lg">
-            Официальная коллекция музейных экспонатов, документов и материалов
+          <p className="text-gray-600 text-xl max-w-2xl mx-auto">
+            Загружайте и делитесь фотографиями, видео и материалами из музейных
+            экспозиций
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-8">
+        <div className="grid lg:grid-cols-4 gap-8 mb-8">
           <div className="lg:col-span-1">
             <GalleryUpload onItemsAdd={handleItemsAdd} />
           </div>
 
-          <div className="lg:col-span-2">
-            <div className="bg-white rounded-2xl p-6 shadow-lg">
-              <h2 className="font-montserrat font-semibold text-xl mb-6">
-                Материалы ({items.length})
-              </h2>
+          <div className="lg:col-span-3">
+            <div className="bg-white rounded-2xl p-6 shadow-lg min-h-[400px]">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="font-montserrat font-semibold text-2xl text-gray-900">
+                  📁 Материалы
+                </h2>
+                <div className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
+                  {items.length}{" "}
+                  {items.length === 1
+                    ? "файл"
+                    : items.length < 5
+                      ? "файла"
+                      : "файлов"}
+                </div>
+              </div>
               <MediaGrid
                 items={items}
                 onRemoveItem={handleRemoveItem}
-                emptyMessage="Добавьте первый материал в музейную галерею"
+                emptyMessage="🎨 Добавьте первые материалы в галерею музея"
               />
             </div>
           </div>

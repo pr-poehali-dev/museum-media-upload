@@ -20,18 +20,48 @@ const MediaCard = ({ item, onRemove }: MediaCardProps) => {
   const getFileIcon = (fileName: string) => {
     const ext = fileName.split(".").pop()?.toLowerCase();
 
-    if (["jpg", "jpeg", "png", "gif", "webp"].includes(ext || "")) {
+    if (
+      ["jpg", "jpeg", "png", "gif", "webp", "svg", "bmp"].includes(ext || "")
+    ) {
       return "Image";
-    } else if (["mp4", "avi", "mov", "wmv"].includes(ext || "")) {
+    } else if (
+      ["mp4", "avi", "mov", "wmv", "mkv", "webm"].includes(ext || "")
+    ) {
       return "Video";
     } else if (["pdf"].includes(ext || "")) {
       return "FileText";
     } else if (["doc", "docx"].includes(ext || "")) {
       return "FileText";
-    } else if (["mp3", "wav", "flac"].includes(ext || "")) {
+    } else if (["mp3", "wav", "flac", "aac"].includes(ext || "")) {
       return "Music";
     }
     return "File";
+  };
+
+  const getFileTypeColor = (fileName: string) => {
+    const ext = fileName.split(".").pop()?.toLowerCase();
+
+    if (
+      ["jpg", "jpeg", "png", "gif", "webp", "svg", "bmp"].includes(ext || "")
+    ) {
+      return "bg-green-100 text-green-600";
+    } else if (
+      ["mp4", "avi", "mov", "wmv", "mkv", "webm"].includes(ext || "")
+    ) {
+      return "bg-purple-100 text-purple-600";
+    } else if (["pdf"].includes(ext || "")) {
+      return "bg-red-100 text-red-600";
+    } else if (["doc", "docx"].includes(ext || "")) {
+      return "bg-blue-100 text-blue-600";
+    } else if (["mp3", "wav", "flac", "aac"].includes(ext || "")) {
+      return "bg-orange-100 text-orange-600";
+    }
+    return "bg-gray-100 text-gray-600";
+  };
+
+  const isVideo = (fileName: string) => {
+    const ext = fileName.split(".").pop()?.toLowerCase();
+    return ["mp4", "avi", "mov", "wmv", "mkv", "webm"].includes(ext || "");
   };
 
   const formatFileSize = (bytes: number) => {
@@ -88,19 +118,34 @@ const MediaCard = ({ item, onRemove }: MediaCardProps) => {
   }
 
   return (
-    <div className="bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow duration-200">
-      <div className="aspect-video bg-gray-100 flex items-center justify-center">
+    <div className="bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-200 hover:scale-[1.02]">
+      <div className="aspect-video bg-gray-100 flex items-center justify-center relative">
         {item.preview ? (
-          <img
-            src={item.preview}
-            alt={item.name}
-            className="w-full h-full object-cover"
-          />
+          <>
+            <img
+              src={item.preview}
+              alt={item.name}
+              className="w-full h-full object-cover"
+            />
+            {isVideo(item.name) && (
+              <div className="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
+                <div className="w-16 h-16 bg-white bg-opacity-90 rounded-full flex items-center justify-center">
+                  <Icon name="Play" className="h-8 w-8 text-gray-700 ml-1" />
+                </div>
+              </div>
+            )}
+          </>
         ) : (
-          <Icon
-            name={getFileIcon(item.name)}
-            className="h-12 w-12 text-gray-400"
-          />
+          <div className="flex flex-col items-center">
+            <div
+              className={`w-16 h-16 rounded-full flex items-center justify-center mb-3 ${getFileTypeColor(item.name)}`}
+            >
+              <Icon name={getFileIcon(item.name)} className="h-8 w-8" />
+            </div>
+            <span className="text-sm text-gray-500 font-medium">
+              {item.name.split(".").pop()?.toUpperCase()}
+            </span>
+          </div>
         )}
       </div>
 
